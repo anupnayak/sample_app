@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  # get '/users/:id(.:format)' :to => 'users#show'
-
-  # users get /users/:id(.:format) users#show
+  
+  resources :users
+  get 'users/new'
   get '/signup', :to => 'users#new'
+  get ':id', to: 'users#show', as: 'show'
+ 
+
   
   get '/contact', :to => 'pages#contact'
   get '/about', :to => 'pages#about'
