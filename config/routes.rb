@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  
   resources :users
+  resources :sessions, :only => [:new, :create, :destroy]
+
+  get 'sessions/new'
+  get '/signin', :to => 'sessions#new'
+  get '/signout', :to => 'sessions#destroy'
+  
   get 'users/new'
   get '/signup', :to => 'users#new'
   get ':id', to: 'users#show', as: 'show'

@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
+  before_filter :correct_user, :only => [:edit, :update]
+  before_filter :admin_user, :only => :destroy
+  
   def show
     @user = User.find_by_id(params[:id])
     @title = @user.name
@@ -11,7 +15,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save      
+    if @user.save     
+      sign_in @user 
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
     else
@@ -20,8 +25,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User destroyed."
+    redirect_to users_path
+  end
+
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
   end
 end
