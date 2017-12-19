@@ -31,6 +31,11 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def edit
+    @user = User.find(params[:id])
+    @title = "Edit user"
+  end
+
   private
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)

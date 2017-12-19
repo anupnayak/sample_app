@@ -13,13 +13,15 @@ module SessionsHelper
         @current_user # Useless! Don't use this line.
     end
 
-    def signed_in?
+    def signed_in
         !current_user.nil?
+        @is_signin = 1
     end
 
     def sign_out
         cookies.delete(:remember_token)
         current_user = nil
+        is_signin = nil
     end
 
     private
