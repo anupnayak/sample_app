@@ -45,6 +45,8 @@ class User < ApplicationRecord
         (user && user.salt == cookie_salt) ? user : nil
     end
     
+    has_many :microposts, :dependent => :destroy
+    
     private
     def encrypt_password
         self.salt = make_salt if new_record?
