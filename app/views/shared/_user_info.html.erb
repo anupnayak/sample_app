@@ -1,0 +1,9 @@
+<table class="profile" summary="Profile information">
+    <tr>
+        <td class="sidebar round">
+            <%= gravatar_for current_user, :size => 30 %>
+            <%= current_user.name %> <br />       
+            <%= pluralize(current_user.microposts.count, "micropost") %>
+        </td>
+    </tr>
+</table>

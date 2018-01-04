@@ -26,6 +26,7 @@ class User < ApplicationRecord
                         :length => { :within => 6..40 }
     
     before_save :encrypt_password
+    has_many :microposts, :dependent => :destroy
     
     # Return true if the user's password matches the submitted password.
     def has_password?(submitted_password)
@@ -44,8 +45,6 @@ class User < ApplicationRecord
         user = find_by_id(id)
         (user && user.salt == cookie_salt) ? user : nil
     end
-    
-    has_many :microposts, :dependent => :destroy
     
     private
     def encrypt_password
